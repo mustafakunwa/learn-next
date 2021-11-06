@@ -29,7 +29,9 @@ const Login = () => {
     }
   };
 
-  const submit = (values: credential) => {};
+  const submit = (values: credential) => {
+    router.push("/");
+  };
 
   return (
     <div className={styles.container}>
