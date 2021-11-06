@@ -10,7 +10,6 @@ type ComponentWithPageLayout = AppProps & {
 
 const MyApp = ({ Component, pageProps }: ComponentWithPageLayout) => {
   const Layout = Component.layout || EmptyLayout;
-
   return (
     <Layout>
       <Component {...pageProps} />

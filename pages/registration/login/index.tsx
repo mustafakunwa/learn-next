@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import { Formik, Form, FormikProps, FormikConfig } from "formik";
 import * as Yup from "yup";
-import { MutableRefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./login.module.scss";
 import { Grid, Button } from "@mui/material";
 import TextField from "../../../components/FormikWrappers/Textfield";
+import { setUser } from "../../../services/Auth";
 interface credential {
   username: string;
   password: string;
@@ -14,8 +15,8 @@ const Login = () => {
   const router = useRouter();
   const formRef = useRef<FormikProps<credential>>(null);
   const [initialFormState] = useState<credential>({
-    username: "",
-    password: "",
+    username: "a",
+    password: "a",
   });
 
   const validationSchema = Yup.object().shape({
@@ -30,6 +31,7 @@ const Login = () => {
   };
 
   const submit = (values: credential) => {
+    setUser(true);
     router.push("/");
   };
 

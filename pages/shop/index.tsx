@@ -1,11 +1,7 @@
-import { useEffect } from "react";
 import MainLayout from "../../components/Layouts/main-layout";
+import authenticatedRoute from "../../HOC/auth";
 
 const Shop = () => {
-  useEffect(() => {
-    console.log("shop");
-  }, []);
-  console.log("shop out");
   return (
     <div
       style={{
@@ -22,4 +18,4 @@ const Shop = () => {
 
 Shop.layout = MainLayout;
 
-export default Shop;
+export default authenticatedRoute(Shop);
