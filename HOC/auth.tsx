@@ -1,8 +1,19 @@
 import React from "react";
 import Router from "next/router";
 import { getUser } from "../services/Auth";
+import type { NextPage } from "next";
 
-const authenticatedRoute = (Component: any = null, options: any = {}) => {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type options = {
+  pathAfterFailure?: string;
+};
+const authenticatedRoute = (
+  Component: NextPageWithLayout,
+  options: options = {}
+) => {
   class AuthenticatedRoute extends React.Component {
     state = {
       loading: true,
@@ -25,20 +36,12 @@ const authenticatedRoute = (Component: any = null, options: any = {}) => {
         return <div>loading</div>;
       }
 
-      const Layout = Component.layout || EmptyLayout;
-      return (
-        <Layout>
-          <Component {...this.props} />
-        </Layout>
-      );
+      const getLayout = Component.getLayout ?? ((page) => page);
+      return getLayout(<Component {...this.props} />);
     }
   }
 
   return AuthenticatedRoute;
-};
-
-const EmptyLayout = ({ children }: { children?: React.ReactNode }) => {
-  return <>{children}</>;
 };
 
 export default authenticatedRoute;

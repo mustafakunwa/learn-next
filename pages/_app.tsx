@@ -1,26 +1,23 @@
 import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
+import type { NextPage } from "next";
 import "../styles/globals.scss";
 
-type ComponentWithPageLayout = AppProps & {
-  Component: AppProps["Component"] & {
-    layout?: React.ComponentType;
-  };
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
 };
 
-const MyApp = ({ Component, pageProps, router }: ComponentWithPageLayout) => {
-  const Layout = Component.layout || EmptyLayout;
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const MyApp = ({ Component, pageProps, router }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page) => page);
   return (
-    <Layout>
-      <AnimatePresence exitBeforeEnter>
-        <Component {...pageProps} key={router.route} />
-      </AnimatePresence>
-    </Layout>
+    <AnimatePresence exitBeforeEnter>
+      {getLayout(<Component {...pageProps} key={router.route} />)}
+    </AnimatePresence>
   );
-};
-
-const EmptyLayout = ({ children }: { children?: React.ReactNode }) => {
-  return <>{children}</>;
 };
 
 export default MyApp;

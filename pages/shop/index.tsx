@@ -19,6 +19,8 @@ const Shop = () => {
   );
 };
 
-Shop.layout = MainLayout;
+Shop.getLayout = function getLayout(page: React.ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
+};
 
 export default authenticatedRoute(Shop);

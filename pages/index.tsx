@@ -17,6 +17,8 @@ const Home = () => {
   );
 };
 
-Home.layout = MainLayout;
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
+};
 
 export default Home;
