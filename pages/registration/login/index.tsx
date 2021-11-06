@@ -6,6 +6,8 @@ import styles from "./login.module.scss";
 import { Grid, Button } from "@mui/material";
 import TextField from "../../../components/FormikWrappers/Textfield";
 import { setUser } from "../../../services/Auth";
+import MotionTransition from "../../../components/MotionTransition";
+
 interface credential {
   username: string;
   password: string;
@@ -36,42 +38,44 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.container__card}>
-        <h1>Login</h1>
-        <Formik
-          innerRef={formRef}
-          initialValues={{ ...initialFormState }}
-          validationSchema={validationSchema}
-          enableReinitialize
-          onSubmit={(values) => submit(values)}
-        >
-          {({ values }) => (
-            <Form>
-              <Grid container className={styles.container__form}>
-                <Grid item xs={12}>
-                  <TextField
-                    name="username"
-                    label="user name"
-                    placeholder="username"
-                  />
+    <MotionTransition>
+      <div className={styles.container}>
+        <div className={styles.container__card}>
+          <h1>Login</h1>
+          <Formik
+            innerRef={formRef}
+            initialValues={{ ...initialFormState }}
+            validationSchema={validationSchema}
+            enableReinitialize
+            onSubmit={(values) => submit(values)}
+          >
+            {({ values }) => (
+              <Form>
+                <Grid container className={styles.container__form}>
+                  <Grid item xs={12}>
+                    <TextField
+                      name="username"
+                      label="user name"
+                      placeholder="username"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      name="password"
+                      label="password"
+                      placeholder="password"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    name="password"
-                    label="password"
-                    placeholder="password"
-                  />
-                </Grid>
-              </Grid>
-            </Form>
-          )}
-        </Formik>
-        <Button variant="contained" onClick={handleProceed}>
-          Login
-        </Button>
+              </Form>
+            )}
+          </Formik>
+          <Button variant="contained" onClick={handleProceed}>
+            Login
+          </Button>
+        </div>
       </div>
-    </div>
+    </MotionTransition>
   );
 };
 

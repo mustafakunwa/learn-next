@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-
+import { AnimatePresence } from "framer-motion";
 import "../styles/globals.scss";
 
 type ComponentWithPageLayout = AppProps & {
@@ -8,11 +8,13 @@ type ComponentWithPageLayout = AppProps & {
   };
 };
 
-const MyApp = ({ Component, pageProps }: ComponentWithPageLayout) => {
+const MyApp = ({ Component, pageProps, router }: ComponentWithPageLayout) => {
   const Layout = Component.layout || EmptyLayout;
   return (
     <Layout>
-      <Component {...pageProps} />
+      <AnimatePresence exitBeforeEnter>
+        <Component {...pageProps} key={router.route} />
+      </AnimatePresence>
     </Layout>
   );
 };
