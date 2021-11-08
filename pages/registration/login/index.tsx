@@ -7,7 +7,7 @@ import { Grid, Button } from "@mui/material";
 import TextField from "../../../components/FormikWrappers/Textfield";
 import { setUser } from "../../../services/Auth";
 import MotionTransition from "../../../components/MotionTransition";
-
+import axios from "axios";
 interface credential {
   username: string;
   password: string;
@@ -32,8 +32,8 @@ const Login = () => {
     }
   };
 
-  const submit = (values: credential) => {
-    setUser(true);
+  const submit = async (values: credential) => {
+    await axios.post("/api/auth/login");
     router.push("/");
   };
 

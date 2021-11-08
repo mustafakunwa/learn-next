@@ -11,6 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { setUser, getUser } from "../../services/Auth";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import axios from "axios";
 interface props {
   children?: React.ReactNode;
 }
@@ -20,11 +21,17 @@ const MainLayout: FC<props> = ({ children }) => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLogged(!!getUser());
+    checkAuth();
   }, []);
 
-  const logout = () => {
-    setUser(false);
+  const checkAuth = async () => {
+    const res: any = await axios.get("/api/auth/user");
+    const { isLoggedIn } = res.data;
+    setIsLogged(isLoggedIn);
+  };
+
+  const logout = async () => {
+    const res: any = await axios.get("/api/auth/logout");
     router.push("/registration/login");
   };
   return (

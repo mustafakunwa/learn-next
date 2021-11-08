@@ -1,7 +1,7 @@
 import MainLayout from "../../components/Layouts/main-layout";
 import authenticatedRoute from "../../HOC/auth";
 import MotionTransition from "../../components/MotionTransition";
-
+import { withSessionSsr } from "../../lib/session";
 const Shop = () => {
   return (
     <MotionTransition>
@@ -22,5 +22,25 @@ const Shop = () => {
 Shop.getLayout = function getLayout(page: React.ReactElement) {
   return <MainLayout>{page}</MainLayout>;
 };
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req }: any) {
+    const user = req.session.user;
 
-export default authenticatedRoute(Shop);
+    if (user?.isLoggedIn !== true) {
+      return {
+        redirect: {
+          destination: "/registration/login",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        isLoggedIn: user?.isLoggedIn || false,
+      },
+    };
+  }
+);
+
+export default Shop;
