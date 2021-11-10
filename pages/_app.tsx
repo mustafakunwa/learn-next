@@ -1,6 +1,9 @@
 import type { AppProps } from "next/app";
 import { AnimatePresence } from "framer-motion";
 import type { NextPage } from "next";
+
+import PageLoader from "../components/PageLoader";
+
 import "../styles/globals.scss";
 
 type NextPageWithLayout = NextPage & {
@@ -14,9 +17,12 @@ type AppPropsWithLayout = AppProps & {
 const MyApp = ({ Component, pageProps, router }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page);
   return (
-    <AnimatePresence exitBeforeEnter>
-      {getLayout(<Component {...pageProps} key={router.route} />)}
-    </AnimatePresence>
+    <>
+      <PageLoader />
+      <AnimatePresence exitBeforeEnter>
+        {getLayout(<Component {...pageProps} key={router.route} />)}
+      </AnimatePresence>
+    </>
   );
 };
 
