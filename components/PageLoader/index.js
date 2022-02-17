@@ -23,13 +23,11 @@ const PageLoader = () => {
     };
   });
 
-  return (
-    loading && (
-      <Box className={styles.circularProgressRoot}>
-        <CircularProgress />
-      </Box>
-    )
-  );
+  return loading ? (
+    <Box className={styles.circularProgressRoot}>
+      <CircularProgress />
+    </Box>
+  ) : null;
 };
 
 export default PageLoader;
